@@ -1,15 +1,16 @@
 import os
 
-# Get this from @BotFather on Telegram
-BOT_TOKEN = os.getenv("FINANCE_BOT_TOKEN", "8115381297:AAEfdEGz9LzN8ODshgMcNzN_WgLdosrlMOo")
+BOT_TOKEN = os.environ["FINANCE_BOT_TOKEN"]
 
-# Your numeric Telegram user ID. Message @userinfobot on Telegram to get it.
-# Only this user (and anyone else you add) can use the bot.
 ALLOWED_USER_IDS = {
-    1898021733,  # <-- replace with your real Telegram user ID
+    int(user_id)
+    for user_id in os.getenv("ALLOWED_USER_IDS", "").split(",")
+    if user_id.strip()
 }
 
-DB_PATH = "sqlite+aiosqlite:///finance.db"
+DB_PATH = os.getenv(
+    "DATABASE_URL",
+    "sqlite+aiosqlite:///finance.db",
+)
 
-# Default currency symbol used in messages (purely cosmetic for v1)
-DEFAULT_CURRENCY = "IQD"
+DEFAULT_CURRENCY = os.getenv("DEFAULT_CURRENCY", "IQD")
